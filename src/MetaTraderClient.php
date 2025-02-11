@@ -48,18 +48,18 @@ class MetaTraderClient
     protected $username;
     protected $password;
     private   $m_agent    = 'WebAPI';
-    private   $m_is_crypt = true;
+    protected   $m_is_crypt;
     /**
      * @var bool
      */
     private $debug;
 
-    public function __construct($server, $port, $username, $password, $debug = false)
+    public function __construct($server, $port, $username, $password, $debug = false, $m_is_crypt = false)
     {
 
         $file_path = 'logs/';
         $this->m_agent = "WebAPI";
-        $this->m_is_crypt = true;
+        $this->m_is_crypt = $m_is_crypt;
         MTLogger::Init($this->m_agent, $debug, $file_path);
         $this->server = $server;
         $this->port = $port;
