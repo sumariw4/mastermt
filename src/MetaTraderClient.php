@@ -1,33 +1,33 @@
 <?php
 
 
-namespace Vogmo\MasterMT;
+namespace Vogmo\Mastermt;
 
 
-use Vogmo\MasterMT\Entities\Trade;
-use Vogmo\MasterMT\Entities\User;
-use Vogmo\MasterMT\Exceptions\ConnectionException;
-use Vogmo\MasterMT\Exceptions\TradeException;
-use Vogmo\MasterMT\Exceptions\UserException;
-use Vogmo\MasterMT\Lib\MTAuthProtocol;
-use Vogmo\MasterMT\Lib\MTConnect;
-use Vogmo\MasterMT\Lib\MTLogger;
-use Vogmo\MasterMT\Lib\MTRetCode;
-use Vogmo\MasterMT\Lib\MTTradeProtocol;
-use Vogmo\MasterMT\Lib\MTUser;
-use Vogmo\MasterMT\Lib\MTUserProtocol;
-use Vogmo\MasterMT\Lib\MTOrderProtocol;
-use Vogmo\MasterMT\Lib\MTEnDealAction;
-use Vogmo\MasterMT\Lib\MTHistoryProtocol;
-use Vogmo\MasterMT\Lib\MTOrder;
-use Vogmo\MasterMT\Lib\MTPositionProtocol;
-use Vogmo\MasterMT\Lib\MTPosition;
-use Vogmo\MasterMT\Traits\Deal;
-use Vogmo\MasterMT\Lib\MTDealProtocol;
-use Vogmo\MasterMT\Lib\MTGroupProtocol;
-use Vogmo\MasterMT\Lib\MTTickProtocol;
-use Vogmo\MasterMT\Entities\Order;
-use Vogmo\MasterMT\Lib\CMT5Request;
+use Vogmo\Mastermt\Entities\Trade;
+use Vogmo\Mastermt\Entities\User;
+use Vogmo\Mastermt\Exceptions\ConnectionException;
+use Vogmo\Mastermt\Exceptions\TradeException;
+use Vogmo\Mastermt\Exceptions\UserException;
+use Vogmo\Mastermt\Lib\MTAuthProtocol;
+use Vogmo\Mastermt\Lib\MTConnect;
+use Vogmo\Mastermt\Lib\MTLogger;
+use Vogmo\Mastermt\Lib\MTRetCode;
+use Vogmo\Mastermt\Lib\MTTradeProtocol;
+use Vogmo\Mastermt\Lib\MTUser;
+use Vogmo\Mastermt\Lib\MTUserProtocol;
+use Vogmo\Mastermt\Lib\MTOrderProtocol;
+use Vogmo\Mastermt\Lib\MTEnDealAction;
+use Vogmo\Mastermt\Lib\MTHistoryProtocol;
+use Vogmo\Mastermt\Lib\MTOrder;
+use Vogmo\Mastermt\Lib\MTPositionProtocol;
+use Vogmo\Mastermt\Lib\MTPosition;
+use Vogmo\Mastermt\Traits\Deal;
+use Vogmo\Mastermt\Lib\MTDealProtocol;
+use Vogmo\Mastermt\Lib\MTGroupProtocol;
+use Vogmo\Mastermt\Lib\MTTickProtocol;
+use Vogmo\Mastermt\Entities\Order;
+use Vogmo\Mastermt\Lib\CMT5Request;
 
 //+------------------------------------------------------------------+
 //--- web api version

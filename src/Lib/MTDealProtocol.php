@@ -1,6 +1,6 @@
 <?php
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
 /**
  * Class get deals

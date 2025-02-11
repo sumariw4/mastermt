@@ -1,19 +1,19 @@
 {
-    "name": "vogmo/mastermt",
-    "description": "vogmo mastermt",
-    "type": "library",
-    "license": "GPL-3.0",
-    "autoload": {
-        "psr-4": {
-            "Vogmo\\Mastermt\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "vogmo",
-            "email": "admin@vogmo.com"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {}
+  "name": "vogmo/Mastermt",
+  "description": "vogmo Mastermt",
+  "type": "library",
+  "license": "GPL-3.0",
+  "autoload": {
+    "psr-4": {
+      "Vogmo\\Mastermt\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "vogmo",
+      "email": "admin@vogmo.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {}
 }

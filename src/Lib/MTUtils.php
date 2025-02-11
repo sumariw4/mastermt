@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
 
 class MTUtils

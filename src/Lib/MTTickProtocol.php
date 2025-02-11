@@ -1,6 +1,6 @@
 <?php
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |
 //|                   Copyright 2001-2019, MetaQuotes Software Corp. |

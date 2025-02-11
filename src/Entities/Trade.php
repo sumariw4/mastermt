@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Entities;
+namespace Vogmo\Mastermt\Entities;
 
 
 /**
  * Class Trade
- * @package Vogmo\MasterMT\Entities
+ * @package Vogmo\Mastermt\Entities
  */
 class Trade
 {

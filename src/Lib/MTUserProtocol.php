@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |

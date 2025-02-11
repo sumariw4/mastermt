@@ -1,8 +1,8 @@
 <?php
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
-use Vogmo\MasterMT\Lib\MTOrderJson;
+use Vogmo\Mastermt\Lib\MTOrderJson;
 
 /**
  * Class get history

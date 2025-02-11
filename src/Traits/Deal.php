@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Traits;
+namespace Vogmo\Mastermt\Traits;
 
 
-use Vogmo\MasterMT\Lib\MTRetCode;
-use Vogmo\MasterMT\Exceptions\ConnectionException;
-use Vogmo\MasterMT\Exceptions\UserException;
-use Vogmo\MasterMT\Lib\MTDealProtocol;
-use Vogmo\MasterMT\Lib\MTDeal;
+use Vogmo\Mastermt\Lib\MTRetCode;
+use Vogmo\Mastermt\Exceptions\ConnectionException;
+use Vogmo\Mastermt\Exceptions\UserException;
+use Vogmo\Mastermt\Lib\MTDealProtocol;
+use Vogmo\Mastermt\Lib\MTDeal;
 
 trait Deal
 {

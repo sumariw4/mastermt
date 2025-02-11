@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
-use Vogmo\MasterMT\Lib\MTConSymbol;
-use Vogmo\MasterMT\Lib\MTEnOrderFlags;
+use Vogmo\Mastermt\Lib\MTConSymbol;
+use Vogmo\Mastermt\Lib\MTEnOrderFlags;
 
 /**
  * Class for send request group_total, group_next, group_get

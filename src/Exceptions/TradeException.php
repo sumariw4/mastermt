@@ -1,6 +1,6 @@
 <?php
 
-namespace Vogmo\MasterMT\Exceptions;
+namespace Vogmo\Mastermt\Exceptions;
 
 use Exception;
 

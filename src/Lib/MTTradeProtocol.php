@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Vogmo\MasterMT\Lib;
+namespace Vogmo\Mastermt\Lib;
 
 
-use Vogmo\MasterMT\Entities\Order;
+use Vogmo\Mastermt\Entities\Order;
 use function Couchbase\defaultDecoder;
 
 class MTTradeProtocol

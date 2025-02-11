@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . "/../vendor/autoload.php";
 
-use Vogmo\MasterMT\MetaTraderClient;
-use Vogmo\MasterMT\Entities\User;
-use Vogmo\MasterMT\src\Lib\MTEnDealAction;
-use Vogmo\MasterMT\Entities\Trade;
+use Vogmo\Mastermt\MetaTraderClient;
+use Vogmo\Mastermt\Entities\User;
+use Vogmo\Mastermt\src\Lib\MTEnDealAction;
+use Vogmo\Mastermt\Entities\Trade;
 
 $server = "mt5-demo.uw-global.com";
 $port = 443;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vogmo\MasterMT\Entities;
+namespace Vogmo\Mastermt\Entities;
 
 
 class Order
