@@ -3,15 +3,14 @@
 
 namespace Vogmo\Mastermt;
 
-
 use Vogmo\Mastermt\Entities\Trade;
 use Vogmo\Mastermt\Entities\User;
 use Vogmo\Mastermt\Exceptions\ConnectionException;
 use Vogmo\Mastermt\Exceptions\TradeException;
 use Vogmo\Mastermt\Exceptions\UserException;
 use Vogmo\Mastermt\Lib\MTAuthProtocol;
-use Vogmo\Mastermt\Lib\MTConnect;
 use Vogmo\Mastermt\Lib\MTLogger;
+use Vogmo\Mastermt\Lib\MTConnect;
 use Vogmo\Mastermt\Lib\MTRetCode;
 use Vogmo\Mastermt\Lib\MTTradeProtocol;
 use Vogmo\Mastermt\Lib\MTUser;
