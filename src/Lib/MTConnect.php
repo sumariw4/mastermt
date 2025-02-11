@@ -6,13 +6,12 @@ namespace Vogmo\Mastermt\Lib;
 //|                   Copyright 2001-2019, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
-use Symfony\Component\VarDumper\VarDumper;
-
 /**
  * Create connect to MetaTrader 5 server
  */
 class MTConnect
 {
+    private $is_crypt = false;
     //--- The serial number must be within the range 0000-FFFF:
     //--- 0-3FFF (0-16383) — client commands.
     const MAX_CLIENT_COMMAND = 16383;
@@ -154,7 +153,10 @@ class MTConnect
             if (MTLogger::getIsWriteLog()) MTLogger::write(MTLoggerType::ERROR, 'connection closed');
             return false;
         }
-        //--- number packet
+
+        if (!is_array($data)) {
+            $data = [];
+        }
         $this->m_client_command++;
         //--- packet max, than first
         if ($this->m_client_command > self::MAX_CLIENT_COMMAND) $this->m_client_command = 1;
