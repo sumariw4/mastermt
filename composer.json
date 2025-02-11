@@ -1,6 +1,7 @@
 {
   "name": "vogmo/mastermt",
   "description": "vogmo Mastermt",
+  "version": "1.0.0",
   "type": "library",
   "license": "GPL-3.0",
   "autoload": {
