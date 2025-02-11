@@ -1,7 +1,7 @@
 <?php
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |
-//|                   Copyright 2001-2019, MetaQuotes Software Corp. |
+//|                   Copyright 2000-2021, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
 class MTSymbolProtocol
@@ -478,7 +478,7 @@ class MTSymbolAnswer
     $obj = MTJson::Decode($this->ConfigJson);
     if($obj == null)
        return null;
-
+    
     $result = new MTConSymbol();
     //---
     $result->Symbol               = (string)$obj->Symbol;
@@ -599,6 +599,46 @@ class MTSymbolAnswer
     $result->SpliceTimeType  = (int)$obj->SpliceTimeType;
     $result->SpliceTimeDays  = (int)$obj->SpliceTimeDays;
     //---
+    if(isset($obj->IEFlags))
+      $result->IEFlags       = (int)$obj->IEFlags;
+    else
+      $result->IEFlags       = 0;
+    //---
+    if(isset($obj->Category))
+      $result->Category      = (string)$obj->Category;
+    else
+      $result->Category      = "";
+    //---
+    if(isset($obj->Exchange))
+      $result->Exchange      = (string)$obj->Exchange;
+    else
+      $result->Exchange      = "";
+    //---
+    if(isset($obj->CFI))
+      $result->CFI           = (string)$obj->CFI;
+    else
+      $result->CFI           = "";
+    //---
+    if(isset($obj->Sector))
+      $result->Sector        = (int)$obj->Sector;
+    else
+      $result->Sector        = 0;
+    //---
+    if(isset($obj->Industry))
+      $result->Industry      = (int)$obj->Industry;
+    else
+      $result->Industry      = 0;
+    //---
+    if(isset($obj->Country))
+      $result->Country       = (string)$obj->Country;
+    else
+      $result->Country       = "";
+    //---
+    if(isset($obj->SubscriptionsDelay))
+      $result->SubscriptionsDelay = (int)$obj->SubscriptionsDelay;
+    else
+      $result->SubscriptionsDelay = 0;
+    //---
     $obj = null;
     //---
     return $result;
@@ -615,66 +655,66 @@ class MTSymbolAnswer
     {
      $result = MTConSymbol::GetDefaultMarginRate();
      $new    = false;
-
+    
      if(isset($obj->MarginInitialBuy))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY] = $obj->MarginInitialBuy;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialSell))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL] = $obj->MarginInitialSell;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialBuyLimit))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_LIMIT] = $obj->MarginInitialBuyLimit;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialSellLimit))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_LIMIT] = $obj->MarginInitialSellLimit;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialBuyStop))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP] = $obj->MarginInitialBuyStop;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialSellStop))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP] = $obj->MarginInitialSellStop;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialBuyStopLimit))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP_LIMIT] = $obj->MarginInitialBuyStopLimit;
         $new = true;
        }
-
+       
      if(isset($obj->MarginInitialSellStopLimit))
        {
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP_LIMIT] = $obj->MarginInitialSellStopLimit;
         $new = true;
        }
-
+     
      if(!$new)
         $this->OldMarginRateInitialConvert($symbol, $obj);
      else
        {
         $symbol->MarginRateInitial = $result;
         $this->OldMarginRateInitialSet($symbol, $obj);
-       }
+       } 
     }
 
   /**
-   * convert from deprecated values to actual
+   * convert from deprecated values to actual 
    */
   private function OldMarginRateInitialConvert(&$symbol, $obj)
     {
@@ -696,7 +736,7 @@ class MTSymbolAnswer
      if(isset($obj->MarginLimit))
        {
         $symbol->MarginLimit = (float)$obj->MarginLimit;
-
+        
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_LIMIT]  = $symbol->MarginLimit * $symbol->MarginLong;
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_LIMIT] = $symbol->MarginLimit * $symbol->MarginShort;
        }
@@ -704,7 +744,7 @@ class MTSymbolAnswer
      if(isset($obj->MarginStop))
        {
         $symbol->MarginStop = (float)$obj->MarginStop;
-
+        
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP]  = $symbol->MarginStop * $symbol->MarginLong;
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP] = $symbol->MarginStop * $symbol->MarginShort;
        }
@@ -712,29 +752,29 @@ class MTSymbolAnswer
      if(isset($obj->MarginStopLimit))
        {
         $symbol->MarginStopLimit = (float)$obj->MarginStopLimit;
-
+        
         $result[MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP_LIMIT]  = $symbol->MarginStopLimit * $symbol->MarginLong;
         $result[MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP_LIMIT] = $symbol->MarginStopLimit * $symbol->MarginShort;
        }
-
-     $symbol->MarginRateInitial = $result;
+       
+     $symbol->MarginRateInitial = $result; 
     }
 
   /**
-   * set deprecated values for compatibility
+   * set deprecated values for compatibility 
    */
    private function OldMarginRateInitialSet(&$symbol, $obj)
      {
       $symbol->MarginLong  = $symbol->MarginRateInitial[MTEnMarginRateTypes::MARGIN_RATE_BUY];
       $symbol->MarginShort = $symbol->MarginRateInitial[MTEnMarginRateTypes::MARGIN_RATE_SELL];
 
-      $marginLimitLong     = 0;
-      $marginStopLong      = 0;
-      $marginStopLimitLong = 0;
+      $marginLimitLong     = 0; 
+      $marginStopLong      = 0; 
+      $marginStopLimitLong = 0; 
 
-      $marginLimitShort     = 0;
-      $marginStopShort      = 0;
-      $marginStopLimitShort = 0;
+      $marginLimitShort     = 0; 
+      $marginStopShort      = 0; 
+      $marginStopLimitShort = 0; 
 
       if($symbol->MarginLong!=0)
         {
@@ -845,7 +885,7 @@ class MTEnFillingFlags
   const FILL_FLAGS_FIRST = MTEnFillingFlags::FILL_FLAGS_FOK;
   const FILL_FLAGS_ALL   = 3; //MTEnFillingFlags::FILL_FLAGS_FOK | MTEnFillingFlags::FILL_FLAGS_IOC;
   }
-
+  
 /**
  * allowed order expiration modes flags
  */
@@ -860,8 +900,26 @@ class  MTEnExpirationFlags
   const TIME_FLAGS_FIRST = MTEnExpirationFlags::TIME_FLAGS_GTC;
   const TIME_FLAGS_ALL   = 15; // TIME_FLAGS_GTC|TIME_FLAGS_DAY|TIME_FLAGS_SPECIFIED|TIME_FLAGS_SPECIFIED_DAY
   }
-
-
+  
+/**
+ * allowed order flags
+ * Class MTEnOrderFlags
+ */
+class MTEnOrderFlags
+  {
+  const ORDER_FLAGS_NONE       = 0; // none
+  const ORDER_FLAGS_MARKET     = 1; // market orders
+  const ORDER_FLAGS_LIMIT      = 2; // limit orders
+  const ORDER_FLAGS_STOP       = 4; // stop orders
+  const ORDER_FLAGS_STOP_LIMIT = 8; // stop limit orders
+  const ORDER_FLAGS_SL         = 16; // sl orders
+  const ORDER_FLAGS_TP         = 32; // tp orders
+  const ORDER_FLAGS_CLOSEBY    = 64; // close-by orders
+  //--- all
+  const ORDER_FLAGS_FIRST = MTEnOrderFlags::ORDER_FLAGS_MARKET;
+  const ORDER_FLAGS_ALL   = 127; // ORDER_FLAGS_MARKET|ORDER_FLAGS_LIMIT|ORDER_FLAGS_STOP|ORDER_FLAGS_STOP_LIMIT|ORDER_FLAGS_SL|ORDER_FLAGS_TP|ORDER_FLAGS_CLOSEBY
+  }
+  
   /**
    * allowed trade modes
    */
@@ -875,7 +933,7 @@ class  MTEnTradeMode
   //--- enumeration borders
   const TRADE_FIRST = MTEnTradeMode::TRADE_DISABLED;
   const TRADE_LAST  = MTEnTradeMode::TRADE_FULL;
-
+  
   /**
    * Get object
    *
@@ -911,6 +969,280 @@ class  MTEnTradeMode
       }
     }
   }
+  
+/**
+ * economical sectors
+ */
+class  EnSectors
+  {
+   const SECTOR_UNDEFINED              =0;
+   const SECTOR_BASIC_MATERIALS        =1;
+   const SECTOR_COMMUNICATION_SERVICES =2;
+   const SECTOR_CONSUMER_CYCLICAL      =3;
+   const SECTOR_CONSUMER_DEFENSIVE     =4;
+   const SECTOR_ENERGY                 =5;
+   const SECTOR_FINANCIAL              =6;
+   const SECTOR_HEALTHCARE             =7;
+   const SECTOR_INDUSTRIALS            =8;
+   const SECTOR_REAL_ESTATE            =9;
+   const SECTOR_TECHNOLOGY             =10;
+   const SECTOR_UTILITIES              =11;
+   const SECTOR_CURRENCY               =12;
+   const SECTOR_CURRENCY_CRYPTO        =13;
+   const SECTOR_INDEXES                =14;
+   const SECTOR_COMMODITIES            =15;
+   //--- enumeration borders
+   const SECTOR_FIRST                  =EnSectors::SECTOR_UNDEFINED;
+   const SECTOR_LAST                   =EnSectors::SECTOR_COMMODITIES;
+  }
+
+/**
+ * economical industries
+ */
+class  EnIndustries
+  {
+   const INDUSTRY_UNDEFINED            =0;
+   //--- 
+   //--- Basic Materials
+   //--- 
+   const INDUSTRY_AGRICULTURAL_INPUTS  =1;
+   const INDUSTRY_ALUMINIUM            =2;
+   const INDUSTRY_BUILDING_MATERIALS   =3;
+   const INDUSTRY_CHEMICALS            =4;
+   const INDUSTRY_COKING_COAL          =5;
+   const INDUSTRY_COPPER               =6;
+   const INDUSTRY_GOLD                 =7;
+   const INDUSTRY_LUMBER_WOOD          =8;
+   const INDUSTRY_INDUSTRIAL_METALS    =9;
+   const INDUSTRY_PRECIOUS_METALS      =10;
+   const INDUSTRY_PAPER                =11;
+   const INDUSTRY_SILVER               =12;
+   const INDUSTRY_SPECIALTY_CHEMICALS  =13;
+   const INDUSTRY_STEEL                =14;
+   //--- enumeration borders
+   const INDUSTRY_BASIC_MATERIALS_FIRST=1;
+   const INDUSTRY_BASIC_MATERIALS_LAST =14;
+   const INDUSTRY_BASIC_MATERIALS_END  =50;
+   //--- 
+   //--- Communication Services
+   //--- 
+   const INDUSTRY_ADVERTISING          =51;
+   const INDUSTRY_BROADCASTING         =52;
+   const INDUSTRY_GAMING_MULTIMEDIA    =53;
+   const INDUSTRY_ENTERTAINMENT        =54;
+   const INDUSTRY_INTERNET_CONTENT     =55;
+   const INDUSTRY_PUBLISHING           =56;
+   const INDUSTRY_TELECOM              =57;
+   //--- enumeration borders
+   const INDUSTRY_COMMUNICATION_FIRST  =51;
+   const INDUSTRY_COMMUNICATION_LAST   =57;
+   const INDUSTRY_COMMUNICATION_END    =100;
+   //--- 
+   //--- Consumer Cyclical
+   //--- 
+   const INDUSTRY_APPAREL_MANUFACTURING=101;
+   const INDUSTRY_APPAREL_RETAIL       =102;
+   const INDUSTRY_AUTO_MANUFACTURERS   =103;
+   const INDUSTRY_AUTO_PARTS           =104;
+   const INDUSTRY_AUTO_DEALERSHIP      =105;
+   const INDUSTRY_DEPARTMENT_STORES    =106;
+   const INDUSTRY_FOOTWEAR_ACCESSORIES =107;
+   const INDUSTRY_FURNISHINGS          =108;
+   const INDUSTRY_GAMBLING             =109;
+   const INDUSTRY_HOME_IMPROV_RETAIL   =110;
+   const INDUSTRY_INTERNET_RETAIL      =111;
+   const INDUSTRY_LEISURE              =112;
+   const INDUSTRY_LODGING              =113;
+   const INDUSTRY_LUXURY_GOODS         =114;
+   const INDUSTRY_PACKAGING_CONTAINERS =115;
+   const INDUSTRY_PERSONAL_SERVICES    =116;
+   const INDUSTRY_RECREATIONAL_VEHICLES=117;
+   const INDUSTRY_RESIDENT_CONSTRUCTION=118;
+   const INDUSTRY_RESORTS_CASINOS      =119;
+   const INDUSTRY_RESTAURANTS          =120;
+   const INDUSTRY_SPECIALTY_RETAIL     =121;
+   const INDUSTRY_TEXTILE_MANUFACTURING=122;
+   const INDUSTRY_TRAVEL_SERVICES      =123;
+   //--- enumeration borders
+   const INDUSTRY_CONSUMER_CYCL_FIRST  =101;
+   const INDUSTRY_CONSUMER_CYCL_LAST   =123;
+   const INDUSTRY_CONSUMER_CYCL_END    =150;
+   //--- 
+   //--- Consumer Defensive
+   //--- 
+   const INDUSTRY_BEVERAGES_BREWERS    =151;
+   const INDUSTRY_BEVERAGES_NON_ALCO   =152;
+   const INDUSTRY_BEVERAGES_WINERIES   =153;
+   const INDUSTRY_CONFECTIONERS        =154;
+   const INDUSTRY_DISCOUNT_STORES      =155;
+   const INDUSTRY_EDUCATION_TRAINIG    =156;
+   const INDUSTRY_FARM_PRODUCTS        =157;
+   const INDUSTRY_FOOD_DISTRIBUTION    =158;
+   const INDUSTRY_GROCERY_STORES       =159;
+   const INDUSTRY_HOUSEHOLD_PRODUCTS   =160;
+   const INDUSTRY_PACKAGED_FOODS       =161;
+   const INDUSTRY_TOBACCO              =162;
+   //--- enumeration borders
+   const INDUSTRY_CONSUMER_DEF_FIRST   =151;
+   const INDUSTRY_CONSUMER_DEF_LAST    =162;
+   const INDUSTRY_CONSUMER_DEF_END     =200;
+   //--- 
+   //--- Energy
+   //--- 
+   const INDUSTRY_OIL_GAS_DRILLING     =201;
+   const INDUSTRY_OIL_GAS_EP           =202;
+   const INDUSTRY_OIL_GAS_EQUIPMENT    =203;
+   const INDUSTRY_OIL_GAS_INTEGRATED   =204;
+   const INDUSTRY_OIL_GAS_MIDSTREAM    =205;
+   const INDUSTRY_OIL_GAS_REFINING     =206;
+   const INDUSTRY_THERMAL_COAL         =207;
+   const INDUSTRY_URANIUM              =208;
+   //--- enumeration borders
+   const INDUSTRY_ENERGY_FIRST         =201;
+   const INDUSTRY_ENERGY_LAST          =208;
+   const INDUSTRY_ENERGY_END           =250;
+   //--- 
+   //--- Financial
+   //--- 
+   const INDUSTRY_EXCHANGE_TRADED_FUND   =251;
+   const INDUSTRY_ASSETS_MANAGEMENT      =252;
+   const INDUSTRY_BANKS_DIVERSIFIED      =253;
+   const INDUSTRY_BANKS_REGIONAL         =254;
+   const INDUSTRY_CAPITAL_MARKETS        =255;
+   const INDUSTRY_CLOSE_END_FUND_DEBT    =256;
+   const INDUSTRY_CLOSE_END_FUND_EQUITY  =257;
+   const INDUSTRY_CLOSE_END_FUND_FOREIGN =258;
+   const INDUSTRY_CREDIT_SERVICES        =259;
+   const INDUSTRY_FINANCIAL_CONGLOMERATE =260;
+   const INDUSTRY_FINANCIAL_DATA_EXCHANGE=261;
+   const INDUSTRY_INSURANCE_BROKERS      =262;
+   const INDUSTRY_INSURANCE_DIVERSIFIED  =263;
+   const INDUSTRY_INSURANCE_LIFE         =264;
+   const INDUSTRY_INSURANCE_PROPERTY     =265;
+   const INDUSTRY_INSURANCE_REINSURANCE  =266;
+   const INDUSTRY_INSURANCE_SPECIALTY    =267;
+   const INDUSTRY_MORTGAGE_FINANCE       =268;
+   const INDUSTRY_SHELL_COMPANIES        =269;
+   //--- enumeration borders
+   const INDUSTRY_FINANCIAL_FIRST        =251;
+   const INDUSTRY_FINANCIAL_LAST         =269;
+   const INDUSTRY_FINANCIAL_END          =300;
+   //--- 
+   //--- Healthcare
+   //--- 
+   const INDUSTRY_BIOTECHNOLOGY        =301;
+   const INDUSTRY_DIAGNOSTICS_RESEARCH =302;
+   const INDUSTRY_DRUGS_MANUFACTURERS  =303;
+   const INDUSTRY_DRUGS_MANUFACTURERS_SPEC=304;
+   const INDUSTRY_HEALTHCARE_PLANS     =305;
+   const INDUSTRY_HEALTH_INFORMATION   =306;
+   const INDUSTRY_MEDICAL_FACILITIES   =307;
+   const INDUSTRY_MEDICAL_DEVICES      =308;
+   const INDUSTRY_MEDICAL_DISTRIBUTION =309;
+   const INDUSTRY_MEDICAL_INSTRUMENTS  =310;
+   const INDUSTRY_PHARM_RETAILERS      =311;
+   //--- enumeration borders
+   const INDUSTRY_HEALTHCARE_FIRST     =301;
+   const INDUSTRY_HEALTHCARE_LAST      =311;
+   const INDUSTRY_HEALTHCARE_END       =350;
+   //--- 
+   //--- Industrials
+   //--- 
+   const INDUSTRY_AEROSPACE_DEFENSE    =351;
+   const INDUSTRY_AIRLINES             =352;
+   const INDUSTRY_AIRPORTS_SERVICES    =353;
+   const INDUSTRY_BUILDING_PRODUCTS    =354;
+   const INDUSTRY_BUSINESS_EQUIPMENT   =355;
+   const INDUSTRY_CONGLOMERATES        =356;
+   const INDUSTRY_CONSULTING_SERVICES  =357;
+   const INDUSTRY_ELECTRICAL_EQUIPMENT =358;
+   const INDUSTRY_ENGINEERING_CONSTRUCTION  =359;
+   const INDUSTRY_FARM_HEAVY_MACHINERY      =360;
+   const INDUSTRY_INDUSTRIAL_DISTRIBUTION   =361;
+   const INDUSTRY_INFRASTRUCTURE_OPERATIONS =362;
+   const INDUSTRY_FREIGHT_LOGISTICS    =363;
+   const INDUSTRY_MARINE_SHIPPING      =364;
+   const INDUSTRY_METAL_FABRICATION    =365;
+   const INDUSTRY_POLLUTION_CONTROL    =366;
+   const INDUSTRY_RAILROADS            =367;
+   const INDUSTRY_RENTAL_LEASING       =368;
+   const INDUSTRY_SECURITY_PROTECTION  =369;
+   const INDUSTRY_SPEALITY_BUSINESS_SERVICES=370;
+   const INDUSTRY_SPEALITY_MACHINERY   =371;
+   const INDUSTRY_STUFFING_EMPLOYMENT  =372;
+   const INDUSTRY_TOOLS_ACCESSORIES    =373;
+   const INDUSTRY_TRUCKING             =374;
+   const INDUSTRY_WASTE_MANAGEMENT     =375;
+   //--- enumeration borders
+   const INDUSTRY_INDUSTRIALS_FIRST    =351;
+   const INDUSTRY_INDUSTRIALS_LAST     =375;
+   const INDUSTRY_INDUSTRIALS_END      =400;
+   //--- 
+   //--- Real Estate
+   //--- 
+   const INDUSTRY_REAL_ESTATE_DEVELOPMENT=401;
+   const INDUSTRY_REAL_ESTATE_DIVERSIFIED=402;
+   const INDUSTRY_REAL_ESTATE_SERVICES   =403;
+   const INDUSTRY_REIT_DIVERSIFIED     =404;
+   const INDUSTRY_REIT_HEALTCARE       =405;
+   const INDUSTRY_REIT_HOTEL_MOTEL     =406;
+   const INDUSTRY_REIT_INDUSTRIAL      =407;
+   const INDUSTRY_REIT_MORTAGE         =408;
+   const INDUSTRY_REIT_OFFICE          =409;
+   const INDUSTRY_REIT_RESIDENTAL      =410;
+   const INDUSTRY_REIT_RETAIL          =411;
+   const INDUSTRY_REIT_SPECIALITY      =412;
+   //--- enumeration borders
+   const INDUSTRY_REAL_ESTATE_FIRST    =401;
+   const INDUSTRY_REAL_ESTATE_LAST     =412;
+   const INDUSTRY_REAL_ESTATE_END      =450;
+   //--- 
+   //--- Technology
+   //--- 
+   const INDUSTRY_COMMUNICATION_EQUIPMENT=451;
+   const INDUSTRY_COMPUTER_HARDWARE      =452;
+   const INDUSTRY_CONSUMER_ELECTRONICS   =453;
+   const INDUSTRY_ELECTRONIC_COMPONENTS  =454;
+   const INDUSTRY_ELECTRONIC_DISTRIBUTION=455;
+   const INDUSTRY_IT_SERVICES            =456;
+   const INDUSTRY_SCIENTIFIC_INSTRUMENTS =457;
+   const INDUSTRY_SEMICONDUCTOR_EQUIPMENT=458;
+   const INDUSTRY_SEMICONDUCTORS         =459;
+   const INDUSTRY_SOFTWARE_APPLICATION   =460;
+   const INDUSTRY_SOFTWARE_INFRASTRUCTURE=461;
+   const INDUSTRY_SOLAR                  =462;
+   //--- enumeration borders
+   const INDUSTRY_TECHNOLOGY_FIRST       =451;
+   const INDUSTRY_TECHNOLOGY_LAST        =462;
+   const INDUSTRY_TECHNOLOGY_END         =500;
+   //--- 
+   //--- Utilities
+   //--- 
+   const INDUSTRY_UTILITIES_DIVERSIFIED       =501;
+   const INDUSTRY_UTILITIES_POWERPRODUCERS    =502;
+   const INDUSTRY_UTILITIES_RENEWABLE         =503;
+   const INDUSTRY_UTILITIES_REGULATED_ELECTRIC=504;
+   const INDUSTRY_UTILITIES_REGULATED_GAS     =505;
+   const INDUSTRY_UTILITIES_REGULATED_WATER   =506;
+   //--- enumeration borders
+   const INDUSTRY_UTILITIES_FIRST        =501;
+   const INDUSTRY_UTILITIES_LAST         =506;
+   const INDUSTRY_UTILITIES_END          =550;
+   //--- 
+   //--- Commodities
+   //--- 
+   const INDUSTRY_COMMODITIES_AGRICULTURAL=551;
+   const INDUSTRY_COMMODITIES_ENERGY     =552;
+   const INDUSTRY_COMMODITIES_METALS     =553;
+   const INDUSTRY_COMMODITIES_PRECIOUS   =554;
+   //--- enumeration borders
+   const INDUSTRY_COMMODITIES_FIRST      =551;
+   const INDUSTRY_COMMODITIES_LAST       =554;
+   const INDUSTRY_COMMODITIES_END        =600;
+   //--- enumeration borders
+   const INDUSTRY_FIRST                  =0;
+   const INDUSTRY_LAST                   =EnIndustries::INDUSTRY_COMMODITIES_LAST;
+  }
 
 /**
  * order execution modes
@@ -925,7 +1257,7 @@ class  MTEnExecutionMode
   const EXECUTION_FIRST = MTEnExecutionMode::EXECUTION_REQUEST;
   const EXECUTION_LAST  = MTEnExecutionMode::EXECUTION_EXCHANGE;
   }
-
+  
 /**
  * profit and margin calculation modes
  */
@@ -962,7 +1294,7 @@ class  MTEnCalcMode
   const TRADE_MODE_FIRST = MTEnCalcMode::TRADE_MODE_FOREX;
   const TRADE_MODE_LAST  = MTEnCalcMode::TRADE_MODE_SERV_COLLATERAL;
   }
-
+  
 /**
  * orders expiration modes
  */
@@ -975,20 +1307,21 @@ class  MTEnGTCMode
   const ORDERS_FIRST = MTEnGTCMode::ORDERS_GTC;
   const ORDERS_LAST  = MTEnGTCMode::ORDERS_DAILY_NO_STOPS;
   }
-
+  
 /**
  * tick collection flags
  */
 class  MTEnTickFlags
   {
-  const TICK_REALTIME   = 1; // allow realtime tick apply
-  const TICK_COLLECTRAW = 2; // allow to collect raw ticks
-  const TICK_FEED_STATS = 4;  // allow to receive price statisticks from datafeeds
+  const TICK_REALTIME        = 1; // allow realtime tick apply
+  const TICK_COLLECTRAW      = 2; // allow to collect raw ticks
+  const TICK_FEED_STATS      = 4; // allow to receive price statisticks from datafeeds
+  const TICK_NEGATIVE_PRICES = 8; // allow to receive negative prices
   //--- flags borders
   const TICK_NONE = 0;
-  const TICK_ALL  = 7; // TICK_REALTIME | TICK_COLLECTRAW | TICK_FEED_STATS
+  const TICK_ALL  = 15; // TICK_REALTIME | TICK_COLLECTRAW | TICK_FEED_STATS|TICK_NEGATIVE_PRICES
   }
-
+  
 /**
  * chart mode
  */
@@ -1001,7 +1334,7 @@ class MTEnChartMode
   const CHART_MODE_FIRST = MTEnChartMode::CHART_MODE_BID_PRICE;
   const CHART_MODE_LAST  = MTEnChartMode::CHART_MODE_OLD;
   }
-
+  
 /**
  * margin check modes
  */
@@ -1015,7 +1348,7 @@ class  MTEnMarginFlags
   const MARGIN_FLAGS_FIRST = MTEnMarginFlags::MARGIN_FLAGS_NONE;
   const MARGIN_FLAGS_LAST  = MTEnMarginFlags::MARGIN_FLAGS_HEDGE_LARGE_LEG;
   }
-
+  
 /**
  * swaps calculation modes
  */
@@ -1035,7 +1368,7 @@ class MTEnSwapMode
   const SWAP_FIRST = MTEnSwapMode::SWAP_DISABLED;
   const SWAP_LAST  = MTEnSwapMode::SWAP_BY_PROFIT_CURRENCY;
   }
-
+  
 /**
  * Instant Execution Modes
  */
@@ -1046,7 +1379,7 @@ class  MTEnInstantMode
   const INSTANT_CHECK_FIRST = MTEnInstantMode::INSTANT_CHECK_NORMAL;
   const INSTANT_CHECK_LAST  = MTEnInstantMode::INSTANT_CHECK_NORMAL;
   }
-
+  
 /**
  * Request Execution Flags
  */
@@ -1057,7 +1390,7 @@ class MTEnRequestFlags
   //--- flags borders
   const REQUEST_FLAGS_ALL = MTEnRequestFlags::REQUEST_FLAGS_ORDER;
   }
-
+  
 /**
  * common trade flags
  */
@@ -1070,8 +1403,26 @@ class MTEnTradeFlags
   const TRADE_FLAGS_ALL     = 3; // TRADE_FLAGS_PROFIT_BY_MARKET | TRADE_FLAGS_ALLOW_SIGNALS
   const TRADE_FLAGS_DEFAULT = MTEnTradeFlags::TRADE_FLAGS_ALLOW_SIGNALS;
   }
-
-
+  
+/**
+ * Margin Rate Types
+ * Class MTEnMarginRateTypes
+ */
+class MTEnMarginRateTypes
+  {
+  const MARGIN_RATE_BUY             = 0;
+  const MARGIN_RATE_SELL            = 1;
+  const MARGIN_RATE_BUY_LIMIT       = 2;
+  const MARGIN_RATE_SELL_LIMIT      = 3;
+  const MARGIN_RATE_BUY_STOP        = 4;
+  const MARGIN_RATE_SELL_STOP       = 5;
+  const MARGIN_RATE_BUY_STOP_LIMIT  = 6;
+  const MARGIN_RATE_SELL_STOP_LIMIT = 7;
+  //--- enumeration borders
+  const MARGIN_RATE_FIRST = MTEnMarginRateTypes::MARGIN_RATE_BUY;
+  const MARGIN_RATE_LAST  = MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP_LIMIT;
+  }
+  
 /**
  * Options Mode
  * Class MTEnOptionMode
@@ -1086,7 +1437,7 @@ class MTEnOptionMode
   const OPTION_MODE_FIRST = MTEnOptionMode::OPTION_MODE_EUROPEAN_CALL;
   const OPTION_MODE_LAST  = MTEnOptionMode::OPTION_MODE_AMERICAN_PUT;
   }
-
+  
 /**
  * Splice Type
  * Class MTEnSpliceType
@@ -1100,7 +1451,7 @@ class MTEnSpliceType
   const SPLICE_FIRST = MTEnSpliceType::SPLICE_NONE;
   const SPLICE_LAST  = MTEnSpliceType::SPLICE_ADJUSTED;
   }
-
+  
 /**
  * Splice Time Type
  * Class MTEnSpliceTimeType
@@ -1113,6 +1464,634 @@ class MTEnSpliceTimeType
   const SPLICE_TIME_LAST  = MTEnSpliceTimeType::SPLICE_TIME_EXPIRATION;
   }
 
+/**
+ * class config symbol
+ */
+class MTConSymbol
+  {
+  /**
+   * name
+   * @var string
+   */
+  public $Symbol;
+  /**
+   * hierarchical symbol path (including symbol name)
+   * @var string
+   */
+  public $Path;
+  /**
+   * ISIN
+   * @var string
+   */
+  public $ISIN;
+  /**
+   * local description
+   * @var string
+   */
+  public $Description;
+  /**
+   * internation description
+   * @var string
+   */
+  public $International;
+  /**
+   * basic symbol name
+   * @var string
+   */
+  public $Basis;
+  /**
+   * source symbol name
+   * @var string
+   */
+  public $Source;
+  /**
+   * symbol specification page URL
+   * @var string
+   */
+  public $Page;
+  /**
+   * symbol base currency
+   * @var string
+   */
+  public $CurrencyBase;
+  /**
+   * symbol base currency digits
+   * @var int
+   */
+  public $CurrencyBaseDigits;
+  /**
+   * symbol profit currency
+   * @var string
+   */
+  public $CurrencyProfit;
+  /**
+   * symbol profit currency digits
+   * @var int
+   */
+  public $CurrencyProfitDigits;
+  /**
+   * symbol margin currency
+   * @var string
+   */
+  public $CurrencyMargin;
+  /**
+   * symbol margin currency digits
+   * @var int
+   */
+  public $CurrencyMarginDigits;
+  /**
+   * symbol color
+   * @var int
+   */
+  public $Color;
+  /**
+   * symbol background color
+   * @var int
+   */
+  public $ColorBackground;
+  /**
+   * symbol digits
+   * @var int
+   */
+  public $Digits;
+  /**
+   * symbol digits derivation (1/10^digits & 10^digits)
+   * @var double
+   */
+  public $Point;
+  /**
+   * Multiply
+   * @var double
+   */
+  public $Multiply;
+  /**
+   * MTEnTickFlags
+   * @var MTEnTickFlags
+   */
+  public $TickFlags;
+  /**
+   * Depth of Market depth (both legs)
+   * @var int
+   */
+  public $TickBookDepth;
+  /**
+   * chart mode
+   * @var MTEnChartMode
+   */
+  public $ChartMode;
+  /**
+   * filtration soft level
+   * @var int
+   */
+  public $FilterSoft;
+  /**
+   * filtration soft level counter
+   * @var int
+   */
+  public $FilterSoftTicks;
+  /**
+   * filtration hard level
+   * @var int
+   */
+  public $FilterHard;
+  /**
+   * filtration hard level counter
+   * @var int
+   */
+  public $FilterHardTicks;
+  /**
+   * filtration discard level
+   * @var int
+   */
+  public $FilterDiscard;
+  /**
+   * spread max value
+   * @var int
+   */
+  public $FilterSpreadMax;
+  /**
+   * spread min value
+   * @var int
+   */
+  public $FilterSpreadMin;
+  /**
+   * gap level
+   * @var int
+   */
+  public $FilterGap;
+  /**
+   * gap level ticks
+   * @var int
+   */
+  public $FilterGapTicks;
+  /**
+   * @var MTEnTradeMode
+   */
+  public $TradeMode;
+  /**
+   * @var MTEnTradeFlags
+   */
+  public $TradeFlags;
+  /**
+   * @var MTEnCalcMode
+   */
+  public $CalcMode;
+  /**
+   * @var MTEnExecutionMode
+   */
+  public $ExecMode;
+  /**
+   * @var MTEnGTCMode
+   */
+  public $GTCMode;
+  /**
+   * @var MTEnFillingFlags
+   */
+  public $FillFlags;
+  /**
+   * @var MTEnExpirationFlags
+   */
+  public $ExpirFlags;
+  /**
+   * @var MTEnOrderFlags
+   */
+  public $OrderFlags;
+  /**
+   * symbol spread (0-floating)
+   * @var int
+   */
+  public $Spread;
+  /**
+   * spread balance
+   * @var int
+   */
+  public $SpreadBalance;
+  /**
+   * spread difference
+   * @var int
+   */
+  public $SpreadDiff;
+  /**
+   * spread difference balance
+   * @var int
+   */
+  public $SpreadDiffBalance;
+  /**
+   * tick value
+   * @var double
+   */
+  public $TickValue;
+  /**
+   * tick size
+   * @var double
+   */
+  public $TickSize;
+  /**
+   * contract size
+   * @var double
+   */
+  public $ContractSize;
+  /**
+   * stops level
+   * @var int
+   */
+  public $StopsLevel;
+  /**
+   * freeze level
+   * @var int
+   */
+  public $FreezeLevel;
+  /**
+   * quotes timeout
+   * @var int
+   */
+  public $QuotesTimeout;
+  /**
+   * minimal volume
+   * @var int
+   */
+  public $VolumeMin;
+  /**
+   * minimal volume
+   * @var int
+   */
+  public $VolumeMinExt;
+  /**
+   * maximal volume
+   * @var int
+   */
+  public $VolumeMax;
+  /**
+   * maximal volume
+   * @var int
+   */
+  public $VolumeMaxExt;
+  /**
+   * volume step
+   * @var int
+   */
+  public $VolumeStep;
+  /**
+   * volume step
+   * @var int
+   */
+  public $VolumeStepExt;
+  /**
+   * cumulative positions and orders limit
+   * @var int
+   */
+  public $VolumeLimit;
+  /**
+   * cumulative positions and orders limit
+   * @var int
+   */
+  public $VolumeLimitExt;
+  /**
+   * @var MTEnMarginFlags
+   */
+  public $MarginFlags;
+  /**
+   * initial margin
+   * @var double
+   */
+  public $MarginInitial;
+  /**
+   * maintenance margin
+   * @var double
+   */
+  public $MarginMaintenance;
+  /**
+   * orders and positions margin rates
+   * @var array
+   */
+  public $MarginRateInitial;
+  /**
+   * orders and positions margin rates
+   * @var array
+   */
+  public $MarginRateMaintenance;
+  /**
+   * orders and positions margin rates
+   * @var double
+   */
+  public $MarginRateLiquidity;
+  /**
+   * hedged positions margin rate
+   * @var double
+   */
+  public $MarginHedged;
+  /**
+   * margin currency rate
+   * @var double
+   */
+  public $MarginRateCurrency;
+  /**
+   * long orders and positions margin rate
+   * @deprecated should use MarginRateInitial and MarginRateMaintenance 
+   * @var double
+   */
+  public $MarginLong;
+  /**
+   * short orders and positions margin rate
+   * @deprecated should use MarginRateInitial and MarginRateMaintenance
+   * @var double
+   */
+  public $MarginShort;
+  /**
+   * limit orders and positions margin rate
+   * @deprecated should use MarginRateInitial and MarginRateMaintenance
+   * @var double
+   */
+  public $MarginLimit;
+  /**
+   * stop orders and positions margin rate
+   * @deprecated should use MarginRateInitial and MarginRateMaintenance
+   * @var double
+   */
+  public $MarginStop;
+  /**
+   * stop-limit orders and positions margin rate
+   * @deprecated should use MarginRateInitial and MarginRateMaintenance
+   * @var double
+   */
+  public $MarginStopLimit;
+  /**
+   * swap mode
+   * @var MTEnSwapMode
+   */
+  public $SwapMode;
+  /**
+   * long positions swaps rate
+   * @var double
+   */
+  public $SwapLong;
+  /**
+   * short positions swaps rate
+   * @var double
+   */
+  public $SwapShort;
+  /**
+   * 3 time swaps day
+   * @var int
+   */
+  public $Swap3Day;
+  /**
+   * trade start date
+   * @var int
+   */
+  public $TimeStart;
+  /**
+   * trade end date
+   * @var int
+   */
+  public $TimeExpiration;
+  /**
+   * quote sessions
+   * @var array
+   */
+  public $SessionsQuotes;
+  /**
+   * trade sessions
+   * @var array
+   */
+  public $SessionsTrades;
+  /**
+   * request execution flags
+   * @var MTEnRequestFlags
+   */
+  public $REFlags;
+  /**
+   * request execution timeout
+   * @var int
+   */
+  public $RETimeout;
+  /**
+   * instant execution check mode MTEnInstantMode
+   * @var MTEnInstantMode
+   */
+  public $IECheckMode;
+  /**
+   * instant execution timeout
+   * @var int
+   */
+  public $IETimeout;
+  /**
+   * instant execution profit slippage
+   * @var int
+   */
+  public $IESlipProfit;
+  /**
+   * instant execution losing slippage
+   * @var int
+   */
+  public $IESlipLosing;
+  /**
+   * instant execution max volume
+   * @var int
+   */
+  public $IEVolumeMax;
+  /**
+   * instant execution max volume
+   * @var int
+   */
+  public $IEVolumeMaxExt;
+  /**
+   * settle price (for futures)
+   * @var double
+   */
+  public $PriceSettle;
+  /**
+   * price limit max (for futures)
+   * @var double
+   */
+  public $PriceLimitMax;
+  /**
+   * price limit min (for futures)
+   * @var double
+   */
+  public $PriceLimitMin;
+  /**
+   * option strike price value
+   * @var double
+   */
+  public $PriceStrike;
+  /**
+   * @var MTEnOptionMode
+   */
+  public $OptionsMode;
+  /**
+   * @var double
+   */
+  public $FaceValue;
+  /**
+   * @var double
+   */
+  public $AccruedInterest;
+  /**
+   * @var MTEnSpliceType
+   */
+  public $SpliceType;
+  /**
+   * @var MTEnSpliceTimeType
+   */
+  public $SpliceTimeType;
+  /**
+   * @var int
+   */
+  public $SpliceTimeDays;
+  /**
+   * instant execution flags
+   * @var MTEnInstantFlags
+   */
+  public $IEFlags;
+  /**
+   * category
+   * @var string
+   */
+  public $Category;
+  /**
+   * exchange
+   * @var string
+   */
+  public $Exchange ;
+  /**
+   * CFI
+   * @var string
+   */
+  public $CFI ;
+  /**
+   * sector
+   * @var EnSectors
+   */
+  public $Sector;  
+  /**
+   * industry 
+   * @var EnIndustries
+   */
+  public $Industry;
+  /**
+   * Country
+   * @var string
+   */
+  public $country;
+  /**
+   * @var int
+   */
+  public $SubscriptionsDelay;  
+
+  /**
+   * Create MTConSymbol with default values
+   * @return MTConSymbol
+   */
+  public static function CreateDefault()
+    {
+    $symbol = new MTConSymbol();
+    //---
+    $symbol->CurrencyBase          = "USD";
+    $symbol->CurrencyProfit        = "USD";
+    $symbol->CurrencyMargin        = "USD";
+    $symbol->Digits                = 4;
+    $symbol->TickBookDepth         = 0;
+    $symbol->TickFlags             = MTEnTickFlags::TICK_REALTIME;
+    $symbol->FilterDiscard         = 500;
+    $symbol->FilterSoftTicks       = 10;
+    $symbol->FilterHardTicks       = 10;
+    $symbol->FilterHard            = 500;
+    $symbol->FilterSoft            = 100;
+    $symbol->FilterSpreadMax       = 0;
+    $symbol->FilterSpreadMin       = 0;
+    $symbol->TradeMode             = MTEnTradeMode::TRADE_FULL;
+    $symbol->TradeFlags            = MTEnTradeFlags::TRADE_FLAGS_DEFAULT;
+    $symbol->Spread                = 0;
+    $symbol->SpreadBalance         = 0;
+    $symbol->TickValue             = 0;
+    $symbol->TickSize              = 0;
+    $symbol->ContractSize          = 100000;
+    $symbol->GTCMode               = MTEnGTCMode::ORDERS_GTC;
+    $symbol->CalcMode              = MTEnCalcMode::TRADE_MODE_FOREX;
+    $symbol->QuotesTimeout         = 0;
+    $symbol->PriceSettle           = 0;
+    $symbol->PriceLimitMax         = 0;
+    $symbol->PriceLimitMin         = 0;
+    $symbol->TimeStart             = 0;
+    $symbol->TimeExpiration        = 0;
+    $symbol->SpreadDiff            = 0;
+    $symbol->SpreadDiffBalance     = 0;
+    $symbol->StopsLevel            = 5;
+    $symbol->FreezeLevel           = 0;
+    $symbol->ExecMode              = MTEnExecutionMode::EXECUTION_INSTANT;
+    $symbol->FillFlags             = MTEnFillingFlags::FILL_FLAGS_FOK;
+    $symbol->ExpirFlags            = MTEnExpirationFlags::TIME_FLAGS_ALL;
+    $symbol->REFlags               = MTEnRequestFlags::REQUEST_FLAGS_NONE;
+    $symbol->RETimeout             = 7;
+    $symbol->IETimeout             = 7;
+    $symbol->IESlipProfit          = 2;
+    $symbol->IESlipLosing          = 2;
+    $symbol->IEVolumeMax           = 0;
+    $symbol->IECheckMode           = MTEnInstantMode::INSTANT_CHECK_NORMAL;
+    $symbol->VolumeMin             = 0;
+    $symbol->VolumeMax             = 100000;
+    $symbol->VolumeMaxExt          = MTUtils::ToNewVolume($symbol->VolumeMax);
+    $symbol->VolumeStep            = 10000;
+    $symbol->VolumeStepExt         = MTUtils::ToNewVolume($symbol->VolumeStep);
+    $symbol->VolumeLimit           = 0;
+    $symbol->MarginFlags           = MTEnMarginFlags::MARGIN_FLAGS_NONE;
+    $symbol->MarginInitial         = 0;
+    $symbol->MarginMaintenance     = 0;
+    $symbol->MarginRateInitial     = self::GetDefaultMarginRate();
+    $symbol->MarginRateMaintenance = self::GetDefaultMarginRate();
+    $symbol->MarginRateLiquidity   = 0;
+    $symbol->MarginHedged          = 0;
+    $symbol->MarginRateCurrency    = 0;
+    //--- DEPRECATED
+    $symbol->MarginLong            = 1;
+    $symbol->MarginShort           = 1;
+    $symbol->MarginLimit           = 0;
+    $symbol->MarginStop            = 0;
+    $symbol->MarginStopLimit       = 0;
+    //---
+    $symbol->SwapMode              = MTEnSwapMode::SWAP_DISABLED;
+    $symbol->SwapLong              = 0;
+    $symbol->SwapShort             = 0;
+    $symbol->Swap3Day              = 3;
+    $symbol->OrderFlags            = MTEnOrderFlags::ORDER_FLAGS_ALL;
+    $symbol->OptionsMode           = MTEnOptionMode::OPTION_MODE_EUROPEAN_CALL;
+    $symbol->PriceStrike           = 0;
+    //---
+    $symbol->FaceValue             = 0;
+    $symbol->AccruedInterest       = 0;
+    $symbol->SpliceType            = MTEnSpliceType::SPLICE_NONE;
+    $symbol->SpliceTimeType        = MTEnSpliceTimeType::SPLICE_TIME_EXPIRATION;
+    $symbol->SpliceTimeDays        = 0;
+    //---
+    $symbol->IEFlags               = 0;
+    $symbol->Category              = "";
+    $symbol->Exchange              = "";
+    $symbol->CFI                   = "";
+    $symbol->Sector                = EnSectors::SECTOR_UNDEFINED;
+    $symbol->Industry              = EnIndustries::INDUSTRY_UNDEFINED;
+    $symbol->Country               = "";
+    $symbol->SubscriptionsDelay    = 15;
+    //---
+    return $symbol;
+    }
+
+  /**
+   * Get dafault Margin rate
+   * @return array
+   */
+  public static function GetDefaultMarginRate()
+    {
+    return array(MTEnMarginRateTypes::MARGIN_RATE_BUY             => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_SELL            => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_BUY_LIMIT       => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_SELL_LIMIT      => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP        => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP       => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_BUY_STOP_LIMIT  => 0.0,
+                 MTEnMarginRateTypes::MARGIN_RATE_SELL_STOP_LIMIT => 0.0);
+    }
+  }
 
 /**
  * hedging flags

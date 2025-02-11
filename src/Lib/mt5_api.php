@@ -1,28 +1,28 @@
 <?php
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |
-//|                   Copyright 2001-2019, MetaQuotes Software Corp. |
+//|                   Copyright 2000-2021, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
 //--- web api version
-define("WebAPIVersion", 2190);
+define("WebAPIVersion", 3802);
 //--- web api date
-define("WebAPIDate", "18 Oct 2019");
+define("WebAPIDate", L"9 Jun 2023");
 //--- including all classes
 include "mt5_auth.php";
 include "mt5_utils.php";
 include "mt5_connect.php";
 include "mt5_protocol.php";
-include "MTLogger.php";
+include "mt5_logger.php";
 include "mt5_time.php";
 include "mt5_common.php";
 include "mt5_group.php";
 include "mt5_symbol.php";
 include "mt5_user.php";
-include "MTDealProtocol.php";
-include "MTOrderProtocol.php";
-include "MTPositionProtocol.php";
-include "MTHistoryProtocol.php";
+include "mt5_deal.php";
+include "mt5_order.php";
+include "mt5_position.php";
+include "mt5_history.php";
 include "mt5_tick.php";
 include "mt5_mail.php";
 include "mt5_news.php";

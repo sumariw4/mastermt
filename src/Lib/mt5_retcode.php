@@ -1,7 +1,7 @@
 <?php
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |
-//|                   Copyright 2001-2019, MetaQuotes Software Corp. |
+//|                   Copyright 2000-2021, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
  class MTRetCode
@@ -139,6 +139,18 @@
    const MT_RET_ERR_NOTSUPPORTED      =12002;     // Command doesn't supported
    const MT_RET_ERR_DEADLOCK          =12003;     // Operation canceled due possible deadlock
    const MT_RET_ERR_LOCKED            =12004;     // Operation on locked entity
+//--- Messengers retcodes
+   const MT_RET_MESSENGER_INVALID_PHONE=14000;    // Invalid phone number
+   const MT_RET_MESSENGER_NOT_MOBILE  =14001;     // Phone number isn't mobile
+//--- Subscriptions retcodes
+   const MT_RET_SUBS_NOT_FOUND        =15000;     // Subscription is not found
+   const MT_RET_SUBS_NOT_FOUND_CFG    =15001;     // Subscription config is not found
+   const MT_RET_SUBS_NOT_FOUND_USER   =15002;     // User for subscription is not found
+   const MT_RET_SUBS_DISABLED         =15003;     // Subscription is disabled
+   const MT_RET_SUBS_PERMISSION_USER  =15004;     // Subscription is not allowed for user
+   const MT_RET_SUBS_PERMISSION_SUBSCRIBE=15005;  // Subscribe is not allowed
+   const MT_RET_SUBS_PERMISSION_UNSUBSCRIBE=15006;// Unsubscribe is not allowed
+   const MT_RET_SUBS_REAL_ONLY         =15007;    // Subscriptions are available for real users only   
     /**
      * Get error string by code
      * @static
@@ -280,6 +292,18 @@
        case MTRetCode::MT_RET_ERR_NOTSUPPORTED      : return 'Command doesn\'t supported';
        case MTRetCode::MT_RET_ERR_DEADLOCK          : return 'Operation canceled due possible deadlock';
        case MTRetCode::MT_RET_ERR_LOCKED            : return 'Operation on locked entity';
+       //---
+       case MTRetCode::MT_RET_MESSENGER_INVALID_PHONE: return 'Invalid phone number';
+       case MTRetCode::MT_RET_MESSENGER_NOT_MOBILE  : return 'Phone number isn\'t mobile';
+       //---
+       case MTRetCode::MT_RET_SUBS_NOT_FOUND        : return 'Subscription is not found';
+       case MTRetCode::MT_RET_SUBS_NOT_FOUND_CFG    : return 'Subscription config is not found';
+       case MTRetCode::MT_RET_SUBS_NOT_FOUND_USER   : return 'User for subscription is not found';
+       case MTRetCode::MT_RET_SUBS_DISABLED         : return 'Subscription is disabled';
+       case MTRetCode::MT_RET_SUBS_PERMISSION_USER  : return 'Subscription is not allowed for user';
+       case MTRetCode::MT_RET_SUBS_PERMISSION_SUBSCRIBE: return 'Subscribe is not allowed';
+       case MTRetCode::MT_RET_SUBS_PERMISSION_UNSUBSCRIBE: return 'Unsubscribe is not allowed';
+       case MTRetCode::MT_RET_SUBS_REAL_ONLY        : return 'Subscriptions are available for real users only';
        }
        return "unknown error";
      }

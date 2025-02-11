@@ -1,7 +1,7 @@
 <?php
 //+------------------------------------------------------------------+
 //|                                             MetaTrader 5 Web API |
-//|                   Copyright 2001-2019, MetaQuotes Software Corp. |
+//|                   Copyright 2000-2021, MetaQuotes Software Corp. |
 //|                                        http://www.metaquotes.net |
 //+------------------------------------------------------------------+
 /**
@@ -465,7 +465,11 @@ class MTConnect
    */
   public function GetNextParam(&$answer, &$pos, &$pos_end)
     {
-    if($pos_end < 0) $pos_end = mb_strpos($answer, "\r\n", 0, 'UTF-8');
+    if($pos_end < 0)
+      {
+      $pos_end = mb_strpos($answer, "\r\n", 0, 'UTF-8');
+      if($pos_end == false) $pos_end = strlen($answer);
+      }
     $pos_code = mb_strpos($answer, '|', $pos + 1, 'UTF-8');
     //---
     if($pos_code > 0 && $pos_code < $pos_end)
